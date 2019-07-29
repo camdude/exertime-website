@@ -5,8 +5,11 @@
 
 .contentBox h1 {
     margin-bottom: 1rem;
-    border-bottom: 2px solid var(--grey);
     color: var(--primary-theme-colour);
+}
+
+.underline {
+    border-bottom: 2px solid var(--grey);
 }
 
 .contentBox ul {

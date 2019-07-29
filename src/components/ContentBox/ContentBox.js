@@ -1,10 +1,10 @@
 import React from 'react';
 
-import './ContentBox.css';
+import classes from './ContentBox.module.css';
 
 const contentBox = props => (
-    <div className="contentBox">
-        <h1>{props.title}</h1>
+    <div className={classes.contentBox}>
+        <h1 className={(props.underline) ? classes.underline : null}>{props.title}</h1>
         {props.children}
     </div>
 );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import * as actionTypes from '../../store/actions';
@@ -59,6 +60,7 @@ class PageOrg extends Component {
   render() {
     return (
       <PageWrapper showModal={this.props.mdl} modalClosed={this.props.onClodeModal}>
+        <NavLink to="/org">Example Org</NavLink>
         <ContentBox title="Organisations">
           {(this.state.addForm) ? <DynamicForm inputs={this.state.tableData.head} buttonLabel="Add Organisation" onSubmit={this.onFormSubmit}/> : <Button clicked={this.onAddEntry}>New Organisation</Button>}
           <DataTable head={this.state.tableData.head} data={this.state.tableData.data} length="10" page="1" />
