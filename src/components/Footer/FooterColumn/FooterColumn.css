@@ -1,0 +1,20 @@
+.footerColumn {
+    min-width: 200px;
+    text-align: start;
+}
+
+.footerColumn ul {
+    list-style: none;
+    margin-left: 1rem;
+    padding: 0.4rem;
+}
+
+.footerColumn a {
+    color: var(--primary-theme-colour);
+    text-decoration: none;
+}
+
+.footerColumn a:hover,
+.footerColumn a:active {
+    color: var(--pale-white);
+}

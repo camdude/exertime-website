@@ -1,0 +1,35 @@
+.row, .editRow {
+    width: 100%;
+}
+
+.row:nth-child(even) {
+    background-color: var(--pale_white);
+}
+
+.row:hover {
+    background-color: var(--light_grey);
+}
+
+.editRow {
+    border: 0.1rem solid var(--secondary-theme-colour);
+    background-color: var(--light_grey);
+}
+
+.row td, .editRow td {
+    padding: 0 0.2rem;
+    border: 1px solid var(--grey);
+}
+
+.editRow input {
+    margin: 0 0.4rem;
+    border: none;
+    border-bottom: 1px solid var(--black);
+    padding: 0.2rem 0.2rem 0 0.2rem;
+    background: white;
+    width: calc(100% - (0.4rem*2));
+    box-sizing: border-box;
+}
+
+.editRow input:focus {
+    outline: 0;
+}

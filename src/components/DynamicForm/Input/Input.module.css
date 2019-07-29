@@ -1,0 +1,33 @@
+.InputField {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+label {
+    margin: auto;
+    padding: 0.2rem;
+    font-weight: bold;
+}
+
+.InputField input {
+    padding: 0.5rem;
+    height: 1rem;
+}
+
+@media (min-width: 640px) {
+    .InputField {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    label {
+        margin: auto 0;
+        width: 30%;
+    }
+    
+    .InputField input {
+        width: 45%;
+    }
+}
