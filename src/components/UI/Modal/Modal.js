@@ -1,7 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {connect} from 'react-redux';
 
-import * as actionTypes from '../../../store/actions';
 import classes from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
@@ -30,17 +28,4 @@ class Modal extends Component {
     
 };
 
-const mapStateToProps = state => {
-    return {
-        mdlData: state.mdl.data
-    };
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onOpenModal: () => dispatch({type: actionTypes.OPEN}),
-        onClodeModal: () => dispatch({type: actionTypes.CLOSE})
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Modal);
+export default Modal;

@@ -1,45 +1,52 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import PageWrapper from '../PageWrapper/PageWrapper';
 import ContentBox from '../../components/ContentBox/ContentBox';
-import Button from '../../components/UI/Button/Button';
 import DynamicForm from '../../components/DynamicForm/Form';
-import DataTable from '../../components/DataTable/DataTable';
+import OrgCard from '../../components/Card/OrgCard/OrgCard';
+import CardGroup from '../../components/Card/CardGroup/CardGroup';
+
 
 class Organisation extends Component {
   state = {
-    groupData: {
-      head: [
-        {heading: "Group Name", type: "text", data: ""},
-        {heading: "Short Name", type: "text", data: ""},
-        {heading: "Run Time", type: "number", data: ""},
-        {heading: "Completion", type: "number", data: ""},
-        {heading: "Postpone Interval", type: "number", data: ""},
-        {heading: "Defualt Exercise", type: "text", data: ""},
-        {heading: "Delay", type: "number", data: ""},
-        {heading: "Emergency Exit", type: "bool", data: ""}
-      ],
-      data: [
-        {id: "a1", data: ["Exertime Project", "EPro", 120, 180, 15, "Walk", 120, "true"]}
-      ]
-    },
-    addRegistForm: false,
-    registData: {
-      head: [
-        {heading: "Registration Key", type: "text", data: ""},
-        {heading: "Remaining", type: "number", data: ""},
-        {heading: "Used", type: "number", data: ""},
-        {heading: "Total", type: "number", data: ""}
-      ],
-      data: [
-        {id: "a1", data: ["o4u3r20o-lu85-5h1w-g4d3-cvzjc6rurp2k", 22, 0, 22]}
-      ]
-    },
+    orgData: null,
+    groups: [
+      {id: "jJ4cbj26fFYK1Mwg8nS", data: ["Exertime Project", "EPro", 120, 180, 15, "Walk", 120, "true"]}
+    ],
+    registrations: [
+      {id: "jJ4cbj26fFYK1Mwg8nS", data: ["Exertime Project", "EPro", 120, 180, 15, "Walk", 120, "true"]}
+    ],
+    groupData: [
+      {heading: "Group Name", type: "text", data: ""},
+      {heading: "Short Name", type: "text", data: ""},
+      {heading: "Run Time", type: "number", data: ""},
+      {heading: "Completion", type: "number", data: ""},
+      {heading: "Postpone Interval", type: "number", data: ""},
+      {heading: "Defualt Exercise", type: "text", data: ""},
+      {heading: "Delay", type: "number", data: ""},
+      {heading: "Emergency Exit", type: "bool", data: ""}
+    ],
+    addGroupForm: false,
+    registData: [
+      {heading: "Registration Key", type: "text", data: ""},
+      {heading: "Remaining", type: "number", data: ""},
+      {heading: "Used", type: "number", data: ""},
+      {heading: "Total", type: "number", data: ""}
+    ],
     addRegistForm: false
   }
 
   componentDidMount() {
+    const toGet = this.props.match.params.org;
+    
+    const allOrgs = this.props.org.state.organisations;
+    allOrgs.forEach(org => {
+      if(org.shortName === toGet) {
+        this.setState({orgData: org});
+      }
+    });
+
     // TODO: Get data from database and format for component
 
   }
@@ -94,22 +101,40 @@ class Organisation extends Component {
   }
 
   render() {
-    return (
-      <PageWrapper>
-        <NavLink to="/group">Example Group</NavLink>
-        <ContentBox title="{Org Name}">
+    let loadedPage = null;
+    if(this.state.orgData) {
+      const groupList = this.state.orgData.groups.map((grp, i) => {
+        return (
+          <OrgCard key={i} name={grp.name} url={this.props.match.url + '/' + grp.shortName}/>
+        );
+      })
+      loadedPage = (
+        <ContentBox title={this.state.orgData.name}>
           <ContentBox title="Groups" underline>
-            {(this.state.addGroupForm) ? <DynamicForm inputs={this.state.groupData.head} buttonLabel="Add Registration" onSubmit={this.onGroupFormSubmit}/> : <Button clicked={this.onAddGroupEntry}>New Registration</Button>}
-            <DataTable head={this.state.groupData.head} data={this.state.groupData.data}/>
+            <CardGroup>
+             {groupList}            
+            </CardGroup>
           </ContentBox>
           <ContentBox title="Registrations" underline>
-            {(this.state.addRegistForm) ? <DynamicForm inputs={this.state.registData.head} buttonLabel="Add Registration" onSubmit={this.onRegistFormSubmit}/> : <Button clicked={this.onAddRegistEntry}>New Registration</Button>}
-            <DataTable head={this.state.registData.head} data={this.state.registData.data}/>
+            <DynamicForm inputs={this.state.registData} buttonLabel="Add Registration" onSubmit={this.onRegistFormSubmit}/>
           </ContentBox>
         </ContentBox>
+      );
+      
+    }
+
+    return (
+      <PageWrapper>
+        {loadedPage}
       </PageWrapper>
     );
   }
 }
 
-export default Organisation;
+const mapStateToProps = state => {
+  return {
+      org: state.org
+  };
+}
+
+export default connect(mapStateToProps, null)(Organisation);

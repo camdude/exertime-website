@@ -1,31 +1,54 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import * as actionTypes from '../../store/actions';
 import PageWrapper from '../../containers/PageWrapper/PageWrapper';
 import ContentBox from '../../components/ContentBox/ContentBox';
-import Button from '../../components/UI/Button/Button';
+import Organisation from './Organisation';
+import OrgCard from '../../components/Card/OrgCard/OrgCard';
+import CardGroup from '../../components/Card/CardGroup/CardGroup';
 import DynamicForm from '../../components/DynamicForm/Form';
-import DataTable from '../../components/DataTable/DataTable';
+import Button from '../../components/UI/Button/Button';
 
 class PageOrg extends Component {
   state = {
-    tableData: {
-      head: [
-        {heading: "Short Name", type: "text", data: ""},
-        {heading: "Name", type: "text", data: ""},
-        {heading: "Countdown Duration", type: "number", data: ""},
-        {heading: "Walking Ex Delay", type: "number", data: ""}
-      ],
-      data: [
-        {id: "a1", data: ["UTAS", "University of Tasmania", 1, 0]}
-      ]
-    },
+    organisations: [],
+    formData: [
+      {heading: "Name", type: "text", data: ""},
+      {heading: "Short Name", type: "text", data: ""},
+      {heading: "Countdown Duration", type: "number", data: ""},
+      {heading: "Walking Ex Delay", type: "number", data: ""}
+    ],
     addForm: false
   }
 
   componentDidMount() {
+    const orgs = this.props.org.state.organisations;
+    const organisations = [];
+
+    orgs.forEach(org => {
+      const grps = [];
+      for (let i = 0; i < org.groups.length  && i < 3; i++) {
+        grps.push(org.groups[i].name);
+      }
+
+      organisations.push({
+        id: org.id, 
+        data: {
+          name: org.name, 
+          shortName: org.shortName, 
+          settings: {
+            cdnDur: org.settings.countdownDuration, 
+            walkExDelay: org.settings.walkingExDelay
+          },
+          groups: grps
+        }
+      }
+    );
+    });
+
+    this.setState({organisations: organisations});
+
     // TODO: Get data from database and format for component
 
   }
@@ -41,16 +64,23 @@ class PageOrg extends Component {
     this.setState({addForm: true});
   }
 
-  onFormSubmit = (event) => {
-    const formSub = [];
-    for(let v in this.state.tableData.head) {
-      formSub.push(this.state.tableData.head[v].data);
+  onFormSubmit = () => {
+    const formSub = this.state.formData;
+    const newEntry = {
+      id: this.randomString(19), 
+      data: {
+        name: formSub[0].data, 
+        shortName: formSub[1].data, 
+        settings: {
+          cdnDur: formSub[2].data, 
+          walkExDelay: formSub[3].data
+        }
+      }
     }
-    const newEntry = {id: this.randomString(19), data: formSub}
 
-    const tableData = this.state.tableData;
-    tableData.data.push(newEntry);
-    this.setState({tableData: tableData});
+    const data = this.state.organisations;
+    data.push(newEntry);
+    this.setState({organisations: data});
 
     // TODO: Update database
 
@@ -58,13 +88,21 @@ class PageOrg extends Component {
   }
 
   render() {
+    const orgList = this.state.organisations.map((org) => {
+      return (
+        <OrgCard key={org.id} name={org.data.name} url={this.props.match.url + '/' + org.data.shortName} groups={org.data.groups}/>
+      );
+    });
+
     return (
       <PageWrapper showModal={this.props.mdl} modalClosed={this.props.onClodeModal}>
-        <NavLink to="/org">Example Org</NavLink>
         <ContentBox title="Organisations">
-          {(this.state.addForm) ? <DynamicForm inputs={this.state.tableData.head} buttonLabel="Add Organisation" onSubmit={this.onFormSubmit}/> : <Button clicked={this.onAddEntry}>New Organisation</Button>}
-          <DataTable head={this.state.tableData.head} data={this.state.tableData.data} length="10" page="1" />
+          {(this.state.addForm) ? <DynamicForm inputs={this.state.formData} buttonLabel="Add Organisation" onSubmit={this.onFormSubmit}/> : <Button clicked={this.onAddEntry}>New Organisation</Button>}
+          <CardGroup>
+            {orgList}
+          </CardGroup>
         </ContentBox>
+        <Route path={this.props.match.url + "/:id"} component={Organisation}/>
       </PageWrapper>
     );
   }
@@ -73,15 +111,8 @@ class PageOrg extends Component {
 
 const mapStateToProps = state => {
   return {
-      mdl: state.mdl.modal
+      org: state.org
   };
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-      onOpenModal: () => dispatch({type: actionTypes.OPEN}),
-      onClodeModal: () => dispatch({type: actionTypes.CLOSE})
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PageOrg);
+export default connect(mapStateToProps, null)(PageOrg);

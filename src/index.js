@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import modalReducer from './store/reducers/modal';
+import orgReducer from './store/reducers/organisations';
 
 const rootReducer = combineReducers({
-    mdl: modalReducer
+    org: orgReducer
 });
 const store = createStore(rootReducer);
 

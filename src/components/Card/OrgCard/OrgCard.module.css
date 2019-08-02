@@ -1,0 +1,27 @@
+.orgCard {
+    margin: 0.5rem;
+    border: 1px solid var(--grey);
+    box-shadow: 0.1rem 0.1rem 0.4rem var(--light_grey);
+    box-sizing: border-box;
+    width: 200px;
+}
+
+.head {
+    padding: 0.5rem;
+    background-color: var(--light_grey);
+    text-align: center;
+}
+
+.head a {
+    color: var(--primary-theme-colour);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.head a:hover {
+    color: var(--secondary-theme-colour);
+}
+
+.content {
+    padding: 0.5rem;
+}

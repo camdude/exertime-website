@@ -5,10 +5,7 @@ import './App.css';
 
 import PageHome from './containers/pages/PageHome';
 import PageOrg from './containers/pages/PageOrg';
-import PageGroups from './containers/pages/PageGroups';
-import PageUsers from './containers/pages/PageUsers';
 import PageExer from './containers/pages/PageExer';
-import PageRegist from './containers/pages/PageRegist';
 import PageGlobal from './containers/pages/PageGlobal';
 import Organisation from './containers/pages/Organisation';
 import Group from './containers/pages/Group';
@@ -21,7 +18,9 @@ class App extends Component {
         <Route path="/group" component={Group}/>
         <Route path="/org" component={Organisation}/>
         <Route path="/exercises" component={PageExer}/>
-        <Route path="/organisations" component={PageOrg}/>
+        <Route path="/organisations/:org/:grp" component={Group}/>
+        <Route path="/organisations/:org" component={Organisation}/>
+        <Route path="/organisations" exact component={PageOrg}/>
         <Route path="/" exact component={PageHome}/>
       </Switch>
     );

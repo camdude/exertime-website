@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
 
 import PageWrapper from '../../containers/PageWrapper/PageWrapper';
 import ContentBox from '../../components/ContentBox/ContentBox';
@@ -20,7 +19,7 @@ class Group extends Component {
         {heading: "New User", type: "bool"}
       ],
       data: [
-        {id: "a1", data: ["", "Exertime", "Administrator", "admin", "@", "true", "Active", 0, "false"]}
+        {id: "LtCm86xOlgAURcNoQZw", data: ["", "Exertime", "Administrator", "admin", "@", "true", "Active", 0, "false"]},
       ]
     }
   }
@@ -28,8 +27,7 @@ class Group extends Component {
   render() {
     return (
       <PageWrapper>
-        <NavLink to="/user">Example User</NavLink>
-        <ContentBox title="{Org Name} -> {Group Name}">
+        <ContentBox title={this.props.match.params.org + " -> " + this.props.match.params.grp}>
             <ContentBox title="Users" underline>
             <DataTable head={this.state.tableData.head} data={this.state.tableData.data}/>
             </ContentBox>
