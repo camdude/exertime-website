@@ -11,12 +11,6 @@ import CardGroup from '../../components/Card/CardGroup/CardGroup';
 class Organisation extends Component {
   state = {
     orgData: null,
-    groups: [
-      {id: "jJ4cbj26fFYK1Mwg8nS", data: ["Exertime Project", "EPro", 120, 180, 15, "Walk", 120, "true"]}
-    ],
-    registrations: [
-      {id: "jJ4cbj26fFYK1Mwg8nS", data: ["Exertime Project", "EPro", 120, 180, 15, "Walk", 120, "true"]}
-    ],
     groupData: [
       {heading: "Group Name", type: "text", data: ""},
       {heading: "Short Name", type: "text", data: ""},
@@ -31,10 +25,8 @@ class Organisation extends Component {
     registData: [
       {heading: "Registration Key", type: "text", data: ""},
       {heading: "Remaining", type: "number", data: ""},
-      {heading: "Used", type: "number", data: ""},
-      {heading: "Total", type: "number", data: ""}
-    ],
-    addRegistForm: false
+      {heading: "Used", type: "number", data: ""}
+    ]
   }
 
   componentDidMount() {
@@ -44,6 +36,12 @@ class Organisation extends Component {
     allOrgs.forEach(org => {
       if(org.shortName === toGet) {
         this.setState({orgData: org});
+
+        const registData = this.state.registData;
+        registData[0].data = org.registration.key;
+        registData[1].data = org.registration.remaining;
+        registData[2].data = org.registration.used;
+        this.setState({registData: registData});
       }
     });
 
@@ -103,9 +101,9 @@ class Organisation extends Component {
   render() {
     let loadedPage = null;
     if(this.state.orgData) {
-      const groupList = this.state.orgData.groups.map((grp, i) => {
+      const groupList = this.state.orgData.groups.map((grp) => {
         return (
-          <OrgCard key={i} name={grp.name} url={this.props.match.url + '/' + grp.shortName}/>
+          <OrgCard key={grp.id} name={grp.name} url={this.props.match.url + '/' + grp.shortName}/>
         );
       })
       loadedPage = (
@@ -115,8 +113,8 @@ class Organisation extends Component {
              {groupList}            
             </CardGroup>
           </ContentBox>
-          <ContentBox title="Registrations" underline>
-            <DynamicForm inputs={this.state.registData} buttonLabel="Add Registration" onSubmit={this.onRegistFormSubmit}/>
+          <ContentBox title="Registration" underline>
+            <DynamicForm inputs={this.state.registData} buttonLabel="Update Registration" onSubmit={this.onRegistFormSubmit}/>
           </ContentBox>
         </ContentBox>
       );

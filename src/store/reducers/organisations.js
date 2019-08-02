@@ -10,7 +10,8 @@ const initialState = {
                 walkingExDelay: 0
             },
             groups: [
-                {name: "Exertime Project",
+                {id: "bj26fFYg8nSK1MjJ4cw",
+                    name: "Exertime Project",
                     shortName: "Epro",
                     runTime: 0,
                     completedEvery: 0,
@@ -44,7 +45,7 @@ const initialState = {
                 },
             ],
             registration: {
-                key: "",
+                key: "o4u3r20o-lu85-5h1w-g4d3-cvzjc6rurp2k",
                 remaining: 1,
                 used: 0
             },
@@ -57,7 +58,8 @@ const initialState = {
                 walkingExDelay: 0
             },
             groups: [
-                {name: "Test1",
+                {id: "FYg8nSK1MjJ4cwbj26f",
+                    name: "Test1",
                     shortName: "T1",
                     runTime: 0,
                     completedEvery: 0,
@@ -66,7 +68,8 @@ const initialState = {
                     exerciseDelay: 0,
                     emergencyExit: true
                 },
-                {name: "Test2",
+                {id: "SK1bj26fFYg8nwMjJ4c",
+                    name: "Test2",
                     shortName: "T2",
                     runTime: 0,
                     completedEvery: 0,
@@ -75,7 +78,8 @@ const initialState = {
                     exerciseDelay: 0,
                     emergencyExit: true
                 },
-                {name: "Test3",
+                {id: "cwfFYg8nSKbj261MjJ4",
+                    name: "Test3",
                     shortName: "T3",
                     runTime: 0,
                     completedEvery: 0,
@@ -84,7 +88,8 @@ const initialState = {
                     exerciseDelay: 0,
                     emergencyExit: true
                 },
-                {name: "Test4",
+                {id: "YgJ4cwSK8nFj1Mbj26f",
+                    name: "Test4",
                     shortName: "T4",
                     runTime: 0,
                     completedEvery: 0,
